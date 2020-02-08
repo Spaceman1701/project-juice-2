@@ -23,6 +23,7 @@ public class PlaceVolume : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
     }
 
     public PlaceType getPlaceType(){

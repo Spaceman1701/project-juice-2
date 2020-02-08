@@ -33,7 +33,7 @@ public class Robot : MonoBehaviour
         
     }
 
-    public void updateState(RobotState updatedState){
+    public void setState(RobotState updatedState){
         state = updatedState;
     }
 
@@ -42,7 +42,6 @@ public class Robot : MonoBehaviour
     }
 
     public void setWaypoint(Transform newWaypoint){
-        Debug.LogError("setting waypoint to "+newWaypoint);
         waypoint = newWaypoint;
     }
 

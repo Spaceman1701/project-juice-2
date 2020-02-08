@@ -8,6 +8,7 @@ public class Menu : MonoBehaviour
     private PlaceVolume.PlaceType placeType;
     private bool isOnHost = false;
     private int tableIndex = -1;
+    public bool justPickedUp = false;
 
     // Start is called before the first frame update
     void Start()
@@ -45,6 +46,7 @@ public class Menu : MonoBehaviour
     void onTriggerExit(){
         isOnHost = false;
         tableIndex = -1;
+        justPickedUp = true;
     }
 
 
