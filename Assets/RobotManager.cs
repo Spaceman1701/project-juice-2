@@ -12,6 +12,7 @@ public class RobotManager : MonoBehaviour
     public List<Transform> queueWaypoints;
     public List<Transform> tableList;
     public int firstEmptyIndex;
+    public int firstInLineIndex;
     private Menu menu; 
 
     public GameObject robotPrefab;
@@ -20,6 +21,7 @@ public class RobotManager : MonoBehaviour
     void Start()
     {
         firstEmptyIndex = 0;
+        firstInLineIndex = 0;
         menu = menuTransform.gameObject.GetComponent<Menu>();
         // robot = robotTransform.gameObject.GetComponent<Robot>();
         // robot.setWaypoint(menuTransform);
@@ -31,25 +33,28 @@ public class RobotManager : MonoBehaviour
     void Update()
     {
         if (menu.justPickedUp){
-            RobotGroup moving = allRobotGroups[0];
+            RobotGroup moving = allRobotGroups[firstInLineIndex];
             moving.setAllWaypoints(menuTransform);
             moving.setAllStates(Robot.RobotState.Follow);
             menu.justPickedUp = false;
             ScootGroup();
+            firstInLineIndex++;
         }
     }
 
     void ScootGroup(){
-        for (int i = 0; i < queueWaypoints.Count; i++){
-            Debug.Log("robot length "+allRobotGroups.Count);
-            allRobotGroups[allRobotGroups.Count-firstEmptyIndex+1].setAllWaypoints(queueWaypoints[i]);
-            Debug.Log("i: "+i+", robot index: "+(allRobotGroups.Count-firstEmptyIndex+1));
-            firstEmptyIndex -= 1;
+        Debug.Log("SCOOTING");
+        for (int i = 0; i < queueWaypoints.Count-1; i++){
+            Debug.Log("robot length "+allRobotGroups.Count+" i "+i+ " qwp "+queueWaypoints.Count + " fei "+firstEmptyIndex);
+            RobotGroup group = allRobotGroups[allRobotGroups.Count- firstEmptyIndex + 1 + i];
+            group.setAllWaypoints(queueWaypoints[i]);
+            Debug.Log("i: "+i+", robot index: "+(allRobotGroups.Count - firstEmptyIndex + 1 + i));
+            
         }
+        firstEmptyIndex -= 1;
     }
 
     void SpawnRobotGroup(){
-        Debug.Log("spawning");
         if (firstEmptyIndex != queueWaypoints.Count){
             Debug.Log("firstEmptyIndex "+firstEmptyIndex);
             RobotGroup robotGroupTemp = new RobotGroup();
@@ -59,7 +64,7 @@ public class RobotManager : MonoBehaviour
                 Robot robot = robotGO.GetComponent<Robot>();
                 robotGroupTemp.addRobot(robot);
 
-                Debug.Log("setting waypoint "+ queueWaypoints[firstEmptyIndex]);                
+                // Debug.Log("setting waypoint "+ queueWaypoints[firstEmptyIndex]);                
             }
             robotGroupTemp.setAllWaypoints(queueWaypoints[firstEmptyIndex]);
             Debug.Log("robotGroupTemp "+robotGroupTemp);
@@ -85,6 +90,7 @@ class RobotGroup{
         ind ++;   
     }
     public void setAllWaypoints(Transform newWaypoint){
+        Debug.Log("Setting to waypoint "+newWaypoint);
         foreach(Robot robot in robots){
             robot.setWaypoint(newWaypoint);
         }
