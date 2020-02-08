@@ -18,7 +18,7 @@ public class ReplicatorController : MonoBehaviour
 
     VRButton[] buttons;
 
-    List<Spawnable> spawnList = new List<Spawnable>();
+    List<ButtonKind> spawnList = new List<ButtonKind>();
 
     // Start is called before the first frame update
     void Start()
@@ -30,5 +30,28 @@ public class ReplicatorController : MonoBehaviour
     void Update()
     {
         
+    }
+
+    void SpawnFoodList()
+    {
+        //TODO: SPAWN FOOD PREFABS
+    }
+
+    public void AddFood(ButtonKind kind)
+    {
+        if (kind == ButtonKind.Go)
+        {
+            SpawnFoodList();
+            spawnList.Clear();
+
+            foreach (VRButton button in buttons)
+            {
+                button.Reset();
+            }
+
+        } else
+        {
+            spawnList.Add(kind);
+        }
     }
 }

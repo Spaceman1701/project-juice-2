@@ -11,35 +11,57 @@ public class VRButton : MonoBehaviour
     public Transform startPos;
     public Transform endPos;
 
-    public ReplicatorController.ButtonKind function;
+    public float stickyTime;
+    public float stuckTime;
 
+    public ReplicatorController.ButtonKind function;
+    public ReplicatorController controller;
+
+    public bool pressed = false;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        controller = GetComponentInParent<ReplicatorController>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        stuckTime -= Time.deltaTime;
+
+        if (pressed)
+        {
+            Press();
+        }
+
+        if (!pressed && stuckTime <= 0)
+        {
+            Unpress();
+        }
+    }
+
+    public void Reset()
+    {
+        pressed = false;
+        stuckTime = 0;
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        Press();
+        pressed = true;
+        stuckTime = stickyTime;
+        controller.AddFood(function);
     }
 
     private void OnTriggerExit(Collider other)
     {
-        Unpress();
+        pressed = false;
     }
 
 
     void Press()
     {
-
         Vector3 current = transform.position;
         current.x = endPos.position.x;
 
