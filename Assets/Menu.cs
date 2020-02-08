@@ -9,6 +9,7 @@ public class Menu : MonoBehaviour
     private bool isOnHost = false;
     private int tableIndex = -1;
     public bool justPickedUp = false;
+    public RobotManager robotManager;
 
     // Start is called before the first frame update
     void Start()
@@ -26,7 +27,7 @@ public class Menu : MonoBehaviour
         return 0;
     }
 
-    void onTriggerEnter(Collider other){
+    public void OnTriggerEnter(Collider other){
         PlaceVolume place = other.gameObject.GetComponent<PlaceVolume>();
         Debug.Log(place);
         if (place != null){
@@ -36,9 +37,14 @@ public class Menu : MonoBehaviour
                 isOnHost = true;
                 Debug.Log("Setting host collision to true");
             }
-
             else{
                 tableIndex = place.getTableIndex();
+                Table table = other.GetComponentInParent<Table>();
+                Debug.Log("Got table!");
+                if (table != null) {
+                    Debug.Log("It wasn't null!");
+                    robotManager.notifyMenuAtTable(table);
+                }
             }
         }
     }

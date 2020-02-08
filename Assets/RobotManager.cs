@@ -10,7 +10,7 @@ public class RobotManager : MonoBehaviour
     private List<RobotGroup> allRobotGroups = new List<RobotGroup>();
     public Transform menuTransform;
     public List<Transform> queueWaypoints;
-    public List<Transform> tableList;
+    public List<Transform> tableWaypoints;
     public int firstEmptyIndex;
     public int firstInLineIndex;
     private Menu menu; 
@@ -40,6 +40,8 @@ public class RobotManager : MonoBehaviour
             ScootGroup();
             firstInLineIndex++;
         }
+
+
     }
 
     void ScootGroup(){
@@ -78,10 +80,18 @@ public class RobotManager : MonoBehaviour
         
     }
 
+    public void notifyMenuAtTable(Table table) {
+        RobotGroup followers = allRobotGroups[firstInLineIndex - 1];
+        foreach (Robot r in followers.robots) {
+            r.assignedTable = table;
+            r.setState(Robot.RobotState.Sit);
+        }
+    }
+
 }
 
 class RobotGroup{
-    List<Robot> robots = new List<Robot>();
+    public List<Robot> robots = new List<Robot>();
     private int ind = 0;
     public void addRobot(Robot robot){
         robot.setState(Robot.RobotState.Queue);

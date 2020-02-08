@@ -20,6 +20,9 @@ public class Robot : MonoBehaviour
     private Vector3 goalPos;
     public float offset = 2.2f;
 
+    public Table assignedTable;
+    public Table.Place tablePlace;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -29,8 +32,27 @@ public class Robot : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        move();
+        if (state == RobotState.Sit) {
+            PerformSit();
+            move();
+        } else if (state == RobotState.Eat) {
+            tablePlace.volume.customer = this;
+        } else {
+            setRobotGoalPos();
+            move();
+        }
+    }
+
+    void NotifyFood() {
         
+    }
+
+    void PerformSit() {
+        tablePlace = assignedTable.places[robotIndex];
+        goalPos = tablePlace.sitWaypoint.position;
+        if (Vector3.Distance(transform.position, goalPos) < 0.001f) {
+            setState(RobotState.Eat);
+        }
     }
 
     public void setState(RobotState updatedState){
@@ -46,7 +68,6 @@ public class Robot : MonoBehaviour
     }
 
     void move(){
-        setRobotGoalPos();
         // Debug.Log("current pos "+transform.position+" goal pos: "+goalPos);
         if (Vector3.Distance(transform.position, goalPos) > 0.001f)
         {

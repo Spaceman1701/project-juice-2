@@ -23,7 +23,14 @@ public class PlaceVolume : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
+    }
+
+    void OnTriggerEnter(Collider other) {
+        Menu menu = other.gameObject.GetComponent<Menu>();
+        if (menu != null) {
+            //menu.OnTriggerEnter(this.GetComponent<Collider>());
+        }
     }
 
     public PlaceType getPlaceType(){
