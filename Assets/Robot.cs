@@ -13,6 +13,7 @@ public class Robot : MonoBehaviour
         Leave
     }
 
+    public float countdownTimer = 120f;
     public float speed; // try 1
     public int robotIndex;
     private RobotState state;
@@ -37,6 +38,13 @@ public class Robot : MonoBehaviour
             move();
         } else if (state == RobotState.Eat) {
             tablePlace.volume.customer = this;
+            // drop time
+            countdownTimer -= Time.deltaTime;
+            if (countdownTimer <= 0){
+                Object.Destroy(this.gameObject);
+            }
+
+
         } else {
             setRobotGoalPos();
             move();
