@@ -157,6 +157,7 @@ public class OVRGrabber : MonoBehaviour
 
         Vector3 destPos = m_parentTransform.TransformPoint(m_anchorOffsetPosition);
         Quaternion destRot = m_parentTransform.rotation * m_anchorOffsetRotation;
+        Debug.Log("DEST-POS = " + destPos);
 
         if (m_moveHandPosition)
         {
@@ -315,6 +316,7 @@ public class OVRGrabber : MonoBehaviour
             // Note: force teleport on grab, to avoid high-speed travel to dest which hits a lot of other objects at high
             // speed and sends them flying. The grabbed object may still teleport inside of other objects, but fixing that
             // is beyond the scope of this demo.
+            //Debug.Log("Transform.position = " + transform.position);
             MoveGrabbedObject(m_lastPos, m_lastRot, true);
             SetPlayerIgnoreCollision(m_grabbedObj.gameObject, true);
             if (m_parentHeldObject)
@@ -326,6 +328,7 @@ public class OVRGrabber : MonoBehaviour
 
     protected virtual void MoveGrabbedObject(Vector3 pos, Quaternion rot, bool forceTeleport = false)
     {
+        Debug.Log("POS = " + pos);
         if (m_grabbedObj == null)
         {
             return;
@@ -335,13 +338,19 @@ public class OVRGrabber : MonoBehaviour
         Vector3 grabbablePosition = pos + rot * m_grabbedObjectPosOff;
         Quaternion grabbableRotation = rot * m_grabbedObjectRotOff;
 
-        if (forceTeleport)
-        {
-            grabbedRigidbody.transform.position = grabbablePosition;
-            grabbedRigidbody.transform.rotation = grabbableRotation;
+        if (forceTeleport) {
+
+            m_grabbedObj.transform.position = grabbablePosition;
+            m_grabbedObj.transform.rotation = grabbableRotation;
+
+
+            //grabbedRigidbody.transform.position = grabbablePosition;
+            //grabbedRigidbody.transform.rotation = grabbableRotation;
         }
         else
         {
+
+
             grabbedRigidbody.MovePosition(grabbablePosition);
             grabbedRigidbody.MoveRotation(grabbableRotation);
         }
