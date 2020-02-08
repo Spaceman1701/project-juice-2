@@ -16,7 +16,7 @@ public class Robot : MonoBehaviour
     public float speed; // try 1
     public int robotIndex;
     private RobotState state;
-    private Transform waypoint;
+    public Transform waypoint;
     private Vector3 goalPos;
     public float offset = 2.2f;
 
