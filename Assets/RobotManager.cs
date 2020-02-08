@@ -12,6 +12,7 @@ public class RobotManager : MonoBehaviour
     public List<Transform> queueWaypoints;
     public List<Transform> tableList;
     public int firstEmptyIndex;
+    public int firstInLineIndex;
     private Menu menu; 
 
     public GameObject robotPrefab;
@@ -20,6 +21,7 @@ public class RobotManager : MonoBehaviour
     void Start()
     {
         firstEmptyIndex = 0;
+        firstInLineIndex = 0;
         menu = menuTransform.gameObject.GetComponent<Menu>();
         // robot = robotTransform.gameObject.GetComponent<Robot>();
         // robot.setWaypoint(menuTransform);
@@ -31,11 +33,12 @@ public class RobotManager : MonoBehaviour
     void Update()
     {
         if (menu.justPickedUp){
-            RobotGroup moving = allRobotGroups[0];
+            RobotGroup moving = allRobotGroups[firstInLineIndex];
             moving.setAllWaypoints(menuTransform);
             moving.setAllStates(Robot.RobotState.Follow);
             menu.justPickedUp = false;
             ScootGroup();
+            firstInLineIndex++;
         }
     }
 
