@@ -170,6 +170,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startPos: {fileID: 1038308727}
   endPos: {fileID: 786477760}
+  controller: 0
 --- !u!65 &16848454
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1070,6 +1071,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startPos: {fileID: 1038308727}
   endPos: {fileID: 786477760}
+  controller: 3
 --- !u!65 &273042608
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1365,6 +1367,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startPos: {fileID: 1038308727}
   endPos: {fileID: 786477760}
+  controller: 2
 --- !u!65 &358926018
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4207,6 +4210,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startPos: {fileID: 1038308727}
   endPos: {fileID: 786477760}
+  controller: 4
 --- !u!1 &1108024423
 GameObject:
   m_ObjectHideFlags: 0
@@ -5487,6 +5491,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startPos: {fileID: 1038308727}
   endPos: {fileID: 786477760}
+  controller: 1
 --- !u!65 &1734451190
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6471,6 +6476,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startPos: {fileID: 1038308727}
   endPos: {fileID: 786477760}
+  controller: 0
 --- !u!65 &2103268499
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -11,6 +11,9 @@ public class VRButton : MonoBehaviour
     public Transform startPos;
     public Transform endPos;
 
+    public ReplicatorController.ButtonKind function;
+
+
     // Start is called before the first frame update
     void Start()
     {
