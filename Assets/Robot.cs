@@ -59,6 +59,7 @@ public class Robot : MonoBehaviour
         tablePlace = assignedTable.places[robotIndex];
         goalPos = tablePlace.sitWaypoint.position;
         if (Vector3.Distance(transform.position, goalPos) < 0.001f) {
+            Debug.Log("EAT");
             setState(RobotState.Eat);
         }
     }

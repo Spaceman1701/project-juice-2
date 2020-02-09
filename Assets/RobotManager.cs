@@ -13,7 +13,10 @@ public class RobotManager : MonoBehaviour
     public List<Transform> tableWaypoints;
     public int firstEmptyIndex;
     public int firstInLineIndex;
-    private Menu menu; 
+    private Menu menu;
+
+    public Transform robotSpawn;
+
 
     public GameObject robotPrefab;
  
@@ -22,7 +25,6 @@ public class RobotManager : MonoBehaviour
     {
         firstEmptyIndex = 0;
         firstInLineIndex = 0;
-        menu = menuTransform.gameObject.GetComponent<Menu>();
         // robot = robotTransform.gameObject.GetComponent<Robot>();
         // robot.setWaypoint(menuTransform);
 
@@ -32,6 +34,8 @@ public class RobotManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        menu = menuTransform.gameObject.GetComponent<Menu>();
+
         if (menu.justPickedUp){
             RobotGroup moving = allRobotGroups[firstInLineIndex];
             moving.setAllWaypoints(menuTransform);
@@ -64,6 +68,7 @@ public class RobotManager : MonoBehaviour
             for(int i = 0; i<4; i++){    
                 GameObject robotGO = Instantiate(robotPrefab);
                 Robot robot = robotGO.GetComponent<Robot>();
+                robotGO.transform.position = robotSpawn.position;
                 robotGroupTemp.addRobot(robot);
 
                 // Debug.Log("setting waypoint "+ queueWaypoints[firstEmptyIndex]);                
@@ -112,6 +117,7 @@ class RobotGroup{
         }
     }
 
+    
 
 
 }

@@ -11,10 +11,16 @@ public class Menu : MonoBehaviour
     public bool justPickedUp = false;
     public RobotManager robotManager;
 
+    public Transform originPoint;
+
+    public Rigidbody rigidBody;
+
+    public GameObject menuPrefab;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        rigidBody = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
@@ -36,23 +42,40 @@ public class Menu : MonoBehaviour
             if (placeType == PlaceVolume.PlaceType.HostStand){
                 isOnHost = true;
                 Debug.Log("Setting host collision to true");
-            }
-            else{
+            } else{
                 tableIndex = place.getTableIndex();
                 Table table = other.GetComponentInParent<Table>();
                 Debug.Log("Got table!");
                 if (table != null) {
                     Debug.Log("It wasn't null!");
                     robotManager.notifyMenuAtTable(table);
+                    Debug.Log("fuck you unity you're the fucking worst how are you real");
+                    GameObject newMenu = Instantiate(menuPrefab, originPoint.position, originPoint.rotation);
+                    Menu m = newMenu.GetComponent<Menu>();
+                    m.originPoint = originPoint;
+                    m.robotManager = robotManager;
+                    m.menuPrefab = menuPrefab;
+                    robotManager.menuTransform = newMenu.transform;
+                    Object.Destroy(this.gameObject);
                 }
+            }
+        } else
+        {
+            Podium p = other.gameObject.GetComponent<Podium>();
+            if (p != null)
+            {
+                isOnHost = true;
             }
         }
     }
 
-    void onTriggerExit(){
-        isOnHost = false;
-        tableIndex = -1;
-        justPickedUp = true;
+    void OnTriggerExit(){
+        if (isOnHost)
+        {
+            isOnHost = false;
+            tableIndex = -1;
+            justPickedUp = true;
+        }
     }
 
 
