@@ -15,6 +15,14 @@ public class ReplicatorController : MonoBehaviour
         Go
     }
 
+    public GameObject breadPrefab;
+    public GameObject gearPrefab;
+    public GameObject lettucePrefab;
+    public GameObject tomatoPrefab;
+    public GameObject platePrefab;
+
+    public Transform spawnPoint;
+
 
     VRButton[] buttons;
 
@@ -34,7 +42,42 @@ public class ReplicatorController : MonoBehaviour
 
     void SpawnFoodList()
     {
-        //TODO: SPAWN FOOD PREFABS
+        Vector3 spawnLoc = spawnPoint.position;
+        GameObject createdObject = null;
+
+        foreach (ButtonKind buttonPress in spawnList)
+        {
+            if (buttonPress == ButtonKind.Bread)
+            {
+                createdObject = Instantiate(breadPrefab);
+            }
+            if (buttonPress == ButtonKind.Gear)
+            {
+                createdObject = Instantiate(gearPrefab);
+            }
+            if (buttonPress == ButtonKind.Lettuce)
+            {
+                createdObject = Instantiate(lettucePrefab);
+            }
+            if (buttonPress == ButtonKind.Tomato)
+            {
+                createdObject = Instantiate(tomatoPrefab);
+            }
+            if (buttonPress == ButtonKind.Plate)
+            {
+                createdObject = Instantiate(platePrefab);
+            }
+            else
+            {
+                Debug.LogError("Spawned something bad, the hell: " + buttonPress);
+            }
+
+            if (createdObject != null)
+            {
+                createdObject.transform.position = spawnLoc;
+                spawnLoc = createdObject.GetComponent<StackableObject>().top.position;
+            }
+        }
     }
 
     public void AddFood(ButtonKind kind)
@@ -51,7 +94,10 @@ public class ReplicatorController : MonoBehaviour
 
         } else
         {
-            spawnList.Add(kind);
+            if (spawnList.Count < 10)
+            {
+                spawnList.Add(kind);
+            }
         }
     }
 }
